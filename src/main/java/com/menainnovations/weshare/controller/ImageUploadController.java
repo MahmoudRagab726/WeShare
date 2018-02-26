@@ -21,7 +21,7 @@ import java.nio.file.Paths;
 @RequestMapping(value = "/api")
 public class ImageUploadController {
 
-    public static String ROOT = "uploads";
+    public static String ROOT = "upload";
 
     private final ResourceLoader resourceLoader;
     @Autowired
