@@ -20,12 +20,9 @@ public class CityAreaController {
     @Autowired
     AreaServiceImpl areaService;
 
-    @RequestMapping(value = "/city" ,method = RequestMethod.GET)
+    @RequestMapping(value = "/cities" ,method = RequestMethod.GET)
     public List<City> getAllCities(){
         return cityService.getAllCities();
     }
-    @RequestMapping(value = "/area" , method = RequestMethod.GET)
-    public List<Area> getAllAreas(){
-        return areaService.getAllAreas();
-    }
+
 }

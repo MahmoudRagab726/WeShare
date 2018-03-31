@@ -6,6 +6,7 @@ import com.menainnovations.weshare.repository.PostRepository;
 import com.menainnovations.weshare.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -48,9 +49,12 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public String addPost(long userId,Post post) {
+    public String addPost(long userId, Post post) {
+        long postId=0;
         User user = userRepository.findUserById(userId);
-        if (post.getTitle()==null || post.getTitle().trim()==""){
+        if (user==null){
+            return "fail";
+        }else if (post.getTitle()==null || post.getTitle().trim()==""){
             return "fail";
         }else  if (post.getPostContent()==null||post.getPostContent().trim()==""){
             return "fail";
@@ -58,12 +62,13 @@ public class PostServiceImpl implements PostService{
             try {
                 post.setUser(user);
                 post.setPostDate(new Date());
-                user.getPosts().add(post);
-                userRepository.save(user);
+                postId= postRepository.save(post).getId();
+                System.out.println(postId);
             }catch (Exception e){
                 return "fail";
             }
-            return "success";
+            return "{\"status\": \"success\"" +
+                    ", \"postId\": "+postId+"}";
         }
 
     }

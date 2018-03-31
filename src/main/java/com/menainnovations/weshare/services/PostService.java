@@ -1,6 +1,7 @@
 package com.menainnovations.weshare.services;
 
 import com.menainnovations.weshare.model.Post;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface PostService {
     public List<Post> getPostByAreaAndCity(String area , String city);
     public List<Post> getAllPostsByUserId(long userId);
     public List<Post> getAllPosts();
-    public String addPost(long userId,Post post);
+    public String addPost(long userId, Post post);
     public void deletePostById(long id);
     public String updatePost(long id,Post post);
 }

@@ -1,11 +1,14 @@
 package com.menainnovations.weshare.controller;
 
+import com.google.gson.Gson;
 import com.menainnovations.weshare.model.Post;
 import com.menainnovations.weshare.model.User;
+import com.menainnovations.weshare.services.PhotoService;
 import com.menainnovations.weshare.services.PostService;
 import com.menainnovations.weshare.services.PostServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -14,7 +17,6 @@ import java.util.List;
 public class PostController {
     @Autowired
     PostServiceImpl postService;
-
     @RequestMapping(value = "/post/{id}" , method = RequestMethod.GET)
     public Post getPostById(@PathVariable long id){
         return postService.getPostById(id);
@@ -63,7 +65,7 @@ public class PostController {
 
     @RequestMapping(value = "/post/{id}"  , method = RequestMethod.PUT)
     public String updatePost(@PathVariable long id , @RequestBody Post post){
-        return postService.updatePost(id,post);
+                return postService.updatePost(id,post);
     }
 
 

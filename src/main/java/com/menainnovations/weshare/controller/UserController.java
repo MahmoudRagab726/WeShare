@@ -17,7 +17,9 @@ public class UserController {
 
     @RequestMapping(value = "/api/user/{id}" , method = RequestMethod.GET)
     public User getUser(@PathVariable  long id){
-        return userService.getUserById(id);
+        User user =userService.getUserById(id);
+        user.setPassword("");
+        return user;
     }
 
     @RequestMapping(value = "/users" , method = RequestMethod.GET , produces = "application/json")

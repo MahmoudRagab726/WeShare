@@ -1,5 +1,6 @@
 package com.menainnovations.weshare.controller;
 
+import com.menainnovations.weshare.exception.LoginFailureException;
 import com.menainnovations.weshare.model.Post;
 import com.menainnovations.weshare.model.User;
 import com.menainnovations.weshare.services.PostServiceImpl;
@@ -22,16 +23,16 @@ public class LoginController {
     public List<Post> login(@RequestBody User user2){
         User user =userService.getUserByEmail(user2.getEmail());
         try {
-
             String userPassword = user.getPassword();
             String password = user2.getPassword();
-            if (user == null || password != password) {
+            if (!password.equals(userPassword)) {
                 return null;
             } else {
                 return postService.getPostsByFollower(user.getId());
             }
-        }catch (NullPointerException e){
+        }catch (Exception e){
             return null;
+
         }
     }
 }

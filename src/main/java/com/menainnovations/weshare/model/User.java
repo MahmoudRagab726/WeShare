@@ -16,7 +16,7 @@ public class User {
     private String phone;
     private String city;
     private String photo;
-    private Collection<Post> posts;
+    private List<Post> posts;
 
 
 
@@ -95,11 +95,11 @@ public class User {
         this.photo = photo;
     }
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
-    public Collection<Post> getPosts() {
+    public List<Post> getPosts() {
         return posts;
     }
 
-    public void setPosts(Collection<Post> posts) {
+    public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
 
