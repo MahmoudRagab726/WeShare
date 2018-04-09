@@ -19,8 +19,8 @@ public class LoginController {
     UserServiceImpl userService;
     @Autowired
     PostServiceImpl postService;
-    @RequestMapping(value = "/login" , method = RequestMethod.POST)
-    public List<Post> login(@RequestBody User user2){
+    @RequestMapping(value = "/login/email" , method = RequestMethod.POST)
+    public User login(@RequestBody User user2){
         User user =userService.getUserByEmail(user2.getEmail());
         try {
             String userPassword = user.getPassword();
@@ -28,11 +28,33 @@ public class LoginController {
             if (!password.equals(userPassword)) {
                 return null;
             } else {
-                return postService.getPostsByFollower(user.getId());
+                User response = userService.getUserById(user.getId());
+                response.setPassword("");
+                return response;
             }
         }catch (Exception e){
             return null;
 
+        }
+    }
+
+    @RequestMapping(value = "/login/phone" , method = RequestMethod.POST)
+    public User loginWithPhone(@RequestBody User user1){
+        User user =userService.getUserByPhone(user1.getPhone());
+        try {
+            String psw=user.getPassword();
+            String password=user1.getPassword();
+            if(!password.equals(psw)){
+                return null;
+            }else {
+                User response = userService.getUserById(user.getId());
+                user.setPassword("");
+                return response;
+            }
+        }catch (NullPointerException e){
+            return null;
+        }catch (Exception e){
+            return null;
         }
     }
 }

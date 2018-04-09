@@ -38,7 +38,7 @@ public class Photo {
     public void setUrl(String url) {
         this.url = url;
     }
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="Post_Id")
     @JsonIgnore
     public Post getPost() {

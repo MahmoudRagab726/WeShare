@@ -40,21 +40,31 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public String addUser(User user){
+        long userId=0;
         if(user.getName().trim()==null || user.getName()==""){
-            return "fail";
+            return "{\"status\": \"fail\"" +
+                    ", \"userId\":}";
         }else if (user.getEmail().trim()==null || user.getEmail()==""){
-            return "fail";
+            return "{\"status\": \"fail\"" +
+                    ", \"userId\":}";
+        }else if(!(getUserByEmail(user.getEmail())==null)){
+            return "{\"status\": \"fail\"" +
+                    ", \"userId\":}";
         }else if (user.getPassword().trim()==null || user.getPassword()=="" ||user.getPassword().length()<10){
-            return "fail";
+            return "{\"status\": \"fail\"" +
+                    ", \"userId\":}";
         }else if (user.getGender()==null){
-            return "fail";
+            return "{\"status\": \"fail\"" +
+                    ", \"userId\":}";
         }else {
             try {
-                userRepository.save(user);
+                userId = userRepository.save(user).getId();
             }catch (Exception ex){
-                return "fail";
+                return "{\"status\": \"fail\"" +
+                        ", \"userId\":}";
             }
-            return "success";
+            return "{\"status\": \"success\"" +
+                    ", \"userId\":"+userId+"}";
         }
     }
     /*
@@ -65,14 +75,14 @@ public class UserServiceImpl implements UserService{
     @Override
     public String deleteUserById(long id){
         if (getUserById(id)==null){
-            return"status : User not found";
+            return "{\"status\": \"fail\"";
         }else {
             try {
                 userRepository.delete(id);
             }catch (Exception ex){
-                return "fail";
+                return "{\"status\": \"fail\"";
             }
-            return "success";
+            return "{\"status\": \"success\"";
         }
     }
     /*
@@ -82,17 +92,17 @@ public class UserServiceImpl implements UserService{
     public String updateUser(long id,User user){
         User user1 = userRepository.findUserById(id);
         if (user1==null){
-            return "User not found";
+            return "{\"status\": \"fail\"";
         }
 
         if(user.getName().trim()==null || user.getName()==""){
-            return "fail";
+            return "{\"status\": \"fail\"";
         }else if (user.getEmail().trim()==null || user.getEmail()==""){
-            return "fail";
+            return "{\"status\": \"fail\"";
         }else if (user.getPassword().trim()==null || user.getPassword()=="" ||user.getPassword().length()<10){
-            return "fail";
+            return "{\"status\": \"fail\"";
         }else if (user.getGender()==null) {
-            return "fail";
+            return "{\"status\": \"fail\"";
         }else {
             try {
                 user1.setName(user.getName());
@@ -103,15 +113,27 @@ public class UserServiceImpl implements UserService{
                 user1.setCity(user.getCity());
                 userRepository.save(user1);
             }catch (Exception e){
-                return "fail";
+                return "{\"status\": \"fail\"";
             }
-            return "success";
+            return "{\"status\": \"success\"";
         }
+    }
+
+    public String updateUserProfilePhoto(long id,String photoURL){
+        User user =userRepository.findUserById(id);
+        user.setPhoto(photoURL);
+        userRepository.save(user);
+        return "success";
     }
 
     @Override
     public User getUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
+    }
+
+    @Override
+    public User getUserByPhone(String phone) {
+        return null;
     }
 
 

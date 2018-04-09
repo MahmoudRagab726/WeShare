@@ -53,11 +53,14 @@ public class PostServiceImpl implements PostService{
         long postId=0;
         User user = userRepository.findUserById(userId);
         if (user==null){
-            return "fail";
+            return "{\"status\": \"fail\"" +
+                    ", \"postId\":}";
         }else if (post.getTitle()==null || post.getTitle().trim()==""){
-            return "fail";
+            return "{\"status\": \"fail\"" +
+                    ", \"postId\":}";
         }else  if (post.getPostContent()==null||post.getPostContent().trim()==""){
-            return "fail";
+            return "{\"status\": \"fail\"" +
+                    ", \"postId\":}";
         }else {
             try {
                 post.setUser(user);
@@ -65,7 +68,8 @@ public class PostServiceImpl implements PostService{
                 postId= postRepository.save(post).getId();
                 System.out.println(postId);
             }catch (Exception e){
-                return "fail";
+                return "{\"status\": \"fail\"" +
+                        ", \"postId\":}";
             }
             return "{\"status\": \"success\"" +
                     ", \"postId\": "+postId+"}";
@@ -80,7 +84,7 @@ public class PostServiceImpl implements PostService{
     @Override
     public String updatePost(long id , Post post) {
         try {
-            postRepository.updatePost(id, post.getTitle(), post.getPostContent(), post.getCaseName(), post.getCaseContact(), post.getCaseAddress(), post.getCaseCity(), post.getCaseArea());
+            postRepository.updatePost(id, post.getTitle(), post.getPostContent(), post.getCaseName(), post.getCaseContact(), post.getCaseAddress(), post.getCaseCity().getId(), post.getCaseArea().getId());
         }catch (Exception e){
             return "fail";
         }

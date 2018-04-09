@@ -11,4 +11,6 @@ public interface UserService {
     public String deleteUserById(long id);
     public String updateUser(long id,User user);
     public User getUserByEmail(String email);
+    public User getUserByPhone(String phone);
+    public String updateUserProfilePhoto(long id,String photoURL);
 }

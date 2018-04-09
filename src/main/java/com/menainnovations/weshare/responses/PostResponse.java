@@ -1,16 +1,12 @@
-package com.menainnovations.weshare.model;
+package com.menainnovations.weshare.responses;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Cascade;
+import com.menainnovations.weshare.model.*;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-@Entity
-public class Post implements Serializable {
+public class PostResponse {
     private long id;
     private String title;
     private String postContent;
@@ -18,17 +14,12 @@ public class Post implements Serializable {
     private String caseName;
     private String caseContact;
     private String caseAddress;
-    private City caseCity;
-    private Area caseArea;
+    private String caseCity;
+    private String caseArea;
     private User user;
     private List<Photo> photos;
-    private List<Comment> comments;
+    private List<CommentResponse> comments;
 
-
-
-    @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
-    @Column(name = "Id")
     public long getId() {
         return id;
     }
@@ -36,7 +27,7 @@ public class Post implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
-    @Column(name = "Title")
+
     public String getTitle() {
         return title;
     }
@@ -44,7 +35,7 @@ public class Post implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
-    @Column(name = "Post_Content")
+
     public String getPostContent() {
         return postContent;
     }
@@ -52,7 +43,7 @@ public class Post implements Serializable {
     public void setPostContent(String postContent) {
         this.postContent = postContent;
     }
-    @Column(name = "Post_Date")
+
     public Date getPostDate() {
         return postDate;
     }
@@ -60,7 +51,7 @@ public class Post implements Serializable {
     public void setPostDate(Date postDate) {
         this.postDate = postDate;
     }
-    @Column(name = "Case_Name")
+
     public String getCaseName() {
         return caseName;
     }
@@ -68,7 +59,7 @@ public class Post implements Serializable {
     public void setCaseName(String caseName) {
         this.caseName = caseName;
     }
-    @Column(name = "Case_Contact")
+
     public String getCaseContact() {
         return caseContact;
     }
@@ -76,7 +67,7 @@ public class Post implements Serializable {
     public void setCaseContact(String caseContact) {
         this.caseContact = caseContact;
     }
-    @Column(name = "Case_Address")
+
     public String getCaseAddress() {
         return caseAddress;
     }
@@ -84,28 +75,23 @@ public class Post implements Serializable {
     public void setCaseAddress(String caseAddress) {
         this.caseAddress = caseAddress;
     }
-    @OneToOne
-    @JsonIgnore
-    public City getCaseCity() {
+
+    public String getCaseCity() {
         return caseCity;
     }
 
-    public void setCaseCity(City caseCity) {
+    public void setCaseCity(String caseCity) {
         this.caseCity = caseCity;
     }
 
-    @OneToOne
-    @JsonIgnore
-    public Area getCaseArea() {
+    public String getCaseArea() {
         return caseArea;
     }
 
-    public void setCaseArea(Area caseArea) {
+    public void setCaseArea(String caseArea) {
         this.caseArea = caseArea;
     }
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="User_Id")
-    @JsonIgnore
+
     public User getUser() {
         return user;
     }
@@ -113,8 +99,7 @@ public class Post implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
-    @OneToMany(mappedBy = "post")
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+
     public List<Photo> getPhotos() {
         return photos;
     }
@@ -122,14 +107,12 @@ public class Post implements Serializable {
     public void setPhotos(List<Photo> photos) {
         this.photos = photos;
     }
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "post")
-    public List<Comment> getComments() {
+
+    public List<CommentResponse> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(List<CommentResponse> comments) {
         this.comments = comments;
     }
-
-
 }

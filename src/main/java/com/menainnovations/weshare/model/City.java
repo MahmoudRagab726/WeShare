@@ -1,13 +1,18 @@
 package com.menainnovations.weshare.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class City {
+public class City implements Serializable {
     private long id ;
     private String cityName;
     private List<Area> areas;
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,4 +40,5 @@ public class City {
     public void setAreas(List<Area> areas) {
         this.areas = areas;
     }
+
 }

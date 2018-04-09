@@ -1,7 +1,10 @@
 package com.menainnovations.weshare.controller;
 
+import com.google.gson.Gson;
 import com.menainnovations.weshare.model.User;
+import com.menainnovations.weshare.responses.UserResponse;
 import com.menainnovations.weshare.services.UserServiceImpl;
+import com.menainnovations.weshare.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,13 +16,11 @@ public class UserController {
     @Autowired
     UserServiceImpl userService;
 
-
-
     @RequestMapping(value = "/api/user/{id}" , method = RequestMethod.GET)
-    public User getUser(@PathVariable  long id){
+    public UserResponse getUser(@PathVariable  long id){
         User user =userService.getUserById(id);
         user.setPassword("");
-        return user;
+        return UserValidator.validateUser(user);
     }
 
     @RequestMapping(value = "/users" , method = RequestMethod.GET , produces = "application/json")
@@ -29,7 +30,9 @@ public class UserController {
 
     @RequestMapping(value = "/api/user" , method = RequestMethod.POST)
     public String addUser(@RequestBody User user){
+
        return userService.addUser(user);
+
     }
     @RequestMapping(value = "/api/user/{id}"  , method = RequestMethod.DELETE)
     public String deleteUser(@PathVariable long id){

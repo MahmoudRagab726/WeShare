@@ -57,17 +57,6 @@ for(MultipartFile file :files) {
         return "redirect:/files";
     }
 */
-    @RequestMapping(method = RequestMethod.GET, value = "uploads/images/post/{postId}/{filename:.+}")
-    @ResponseBody
-    public ResponseEntity<?> getFile(@PathVariable String filename,@PathVariable String postId) {
 
-        try {
-            return ResponseEntity.ok()
-                    .body(resourceLoader.getResource("file:" + Paths.get(ROOT+ "/post/"+postId+"/", filename)));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.notFound().build();
-        }
-    }
 
 }

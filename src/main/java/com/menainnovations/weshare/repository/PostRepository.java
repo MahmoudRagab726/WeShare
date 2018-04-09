@@ -27,7 +27,7 @@ public interface PostRepository extends CrudRepository< Post, Long> {
     @Query(value = "update Post set title =:title , postContent=:postContent , caseName = :caseName , caseContact=:caseContact , caseAddress=:caseAddress" +
             ", caseCity=:caseCity , caseArea = :caseArea where id=:id")
     public void updatePost(@Param("id")long id,@Param("title") String title,@Param("postContent") String postContent , @Param("caseName") String caseName ,@Param("caseContact") String caseContact
-                           ,@Param("caseAddress") String caseAddress ,@Param("caseCity") String caseCity ,@Param("caseArea") String caseArea);
+                           ,@Param("caseAddress") String caseAddress ,@Param("caseCity") long caseCity ,@Param("caseArea") long caseArea);
 
     public List<Post> findPostByCaseAreaOrderByPostDateDesc(String caseArea);
 

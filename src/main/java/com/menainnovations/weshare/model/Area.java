@@ -3,13 +3,13 @@ package com.menainnovations.weshare.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Area {
     private long id;
     private String areaName;
     private City city;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "Id")
@@ -29,7 +29,7 @@ public class Area {
         this.areaName = areaName;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="City_Id")
     @JsonIgnore
     public City getCity() {

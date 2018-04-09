@@ -1,14 +1,10 @@
-package com.menainnovations.weshare.model;
+package com.menainnovations.weshare.responses;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.stereotype.Component;
+import com.menainnovations.weshare.model.Post;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.*;
+import java.util.List;
 
-@Entity
-public class User implements Serializable{
+public class UserResponse {
     private long id;
     private String name;
     private String email;
@@ -16,16 +12,11 @@ public class User implements Serializable{
     private Long gender;
     private String bio;
     private String phone;
-    private City city;
+    private String city;
     private String photo;
     private int status;
     private List<Post> posts;
 
-
-
-    @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
-    @Column(name = "Id")
     public long getId() {
         return id;
     }
@@ -33,7 +24,7 @@ public class User implements Serializable{
     public void setId(long id) {
         this.id = id;
     }
-    @Column(name = "Name")
+
     public String getName() {
         return name;
     }
@@ -41,7 +32,7 @@ public class User implements Serializable{
     public void setName(String name) {
         this.name = name;
     }
-    @Column(name = "Email")
+
     public String getEmail() {
         return email;
     }
@@ -49,7 +40,7 @@ public class User implements Serializable{
     public void setEmail(String email) {
         this.email = email;
     }
-    @Column(name = "Password")
+
     public String getPassword() {
         return password;
     }
@@ -57,7 +48,7 @@ public class User implements Serializable{
     public void setPassword(String password) {
         this.password = password;
     }
-    @Column(name = "Gender")
+
     public Long getGender() {
         return gender;
     }
@@ -65,7 +56,7 @@ public class User implements Serializable{
     public void setGender(Long gender) {
         this.gender = gender;
     }
-    @Column(name = "Bio")
+
     public String getBio() {
         return bio;
     }
@@ -73,7 +64,7 @@ public class User implements Serializable{
     public void setBio(String bio) {
         this.bio = bio;
     }
-    @Column(name = "Phone")
+
     public String getPhone() {
         return phone;
     }
@@ -81,17 +72,15 @@ public class User implements Serializable{
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "User_City")
-    @JsonIgnore
-    public City getCity() {
+
+    public String getCity() {
         return city;
     }
 
-    public void setCity(City city) {
+    public void setCity(String city) {
         this.city = city;
     }
-    @Column(name = "Photo")
+
     public String getPhoto() {
         return photo;
     }
@@ -99,7 +88,7 @@ public class User implements Serializable{
     public void setPhoto(String photo) {
         this.photo = photo;
     }
-    @Column(name = "Status")
+
     public int getStatus() {
         return status;
     }
@@ -108,7 +97,6 @@ public class User implements Serializable{
         this.status = status;
     }
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
     public List<Post> getPosts() {
         return posts;
     }
@@ -116,5 +104,4 @@ public class User implements Serializable{
     public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
-
 }

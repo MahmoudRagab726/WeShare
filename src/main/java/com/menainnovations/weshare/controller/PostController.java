@@ -3,9 +3,11 @@ package com.menainnovations.weshare.controller;
 import com.google.gson.Gson;
 import com.menainnovations.weshare.model.Post;
 import com.menainnovations.weshare.model.User;
+import com.menainnovations.weshare.responses.PostResponse;
 import com.menainnovations.weshare.services.PhotoService;
 import com.menainnovations.weshare.services.PostService;
 import com.menainnovations.weshare.services.PostServiceImpl;
+import com.menainnovations.weshare.validator.PostValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,8 +20,8 @@ public class PostController {
     @Autowired
     PostServiceImpl postService;
     @RequestMapping(value = "/post/{id}" , method = RequestMethod.GET)
-    public Post getPostById(@PathVariable long id){
-        return postService.getPostById(id);
+    public PostResponse getPostById(@PathVariable long id){
+        return PostValidator.validatePost(postService.getPostById(id));
     }
     @RequestMapping(value = "/search" , method = RequestMethod.GET)
     public List<Post> getPostByAreaOrCityOrBoth(@RequestParam("area") String area , @RequestParam("city") String city){
@@ -56,7 +58,7 @@ public class PostController {
     public String deletePost(@PathVariable long id){
         Post post =postService.getPostById(id);
         if(post ==null){
-            return "User u want to delete not found";
+            return "fail";
         }else {
             postService.deletePostById(id);
             return "success";
