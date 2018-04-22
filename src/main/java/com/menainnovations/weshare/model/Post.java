@@ -18,9 +18,10 @@ public class Post implements Serializable {
     private String caseName;
     private String caseContact;
     private String caseAddress;
-    private City caseCity;
-    private Area caseArea;
+    private String caseCity;
+    private String caseArea;
     private User user;
+    private String postType;
     private List<Photo> photos;
     private List<Comment> comments;
 
@@ -84,25 +85,24 @@ public class Post implements Serializable {
     public void setCaseAddress(String caseAddress) {
         this.caseAddress = caseAddress;
     }
-    @OneToOne
-    @JsonIgnore
-    public City getCaseCity() {
+
+    @Column(name = "Case_City")
+    public String getCaseCity() {
         return caseCity;
     }
-
-    public void setCaseCity(City caseCity) {
+    public void setCaseCity(String caseCity) {
         this.caseCity = caseCity;
     }
 
-    @OneToOne
-    @JsonIgnore
-    public Area getCaseArea() {
+    @Column(name = "Case_Area")
+    public String getCaseArea() {
         return caseArea;
     }
 
-    public void setCaseArea(Area caseArea) {
+    public void setCaseArea(String caseArea) {
         this.caseArea = caseArea;
     }
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="User_Id")
     @JsonIgnore
@@ -113,6 +113,16 @@ public class Post implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Column(name = "Post_Type")
+    public String getPostType() {
+        return postType;
+    }
+
+    public void setPostType(String postType) {
+        this.postType = postType;
+    }
+
     @OneToMany(mappedBy = "post")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     public List<Photo> getPhotos() {

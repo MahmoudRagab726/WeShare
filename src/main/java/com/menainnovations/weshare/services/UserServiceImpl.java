@@ -75,14 +75,14 @@ public class UserServiceImpl implements UserService{
     @Override
     public String deleteUserById(long id){
         if (getUserById(id)==null){
-            return "{\"status\": \"fail\"";
+            return "{\"status\": \"fail\"}";
         }else {
             try {
                 userRepository.delete(id);
             }catch (Exception ex){
-                return "{\"status\": \"fail\"";
+                return "{\"status\": \"fail\"}";
             }
-            return "{\"status\": \"success\"";
+            return "{\"status\": \"success\"}";
         }
     }
     /*
@@ -92,17 +92,17 @@ public class UserServiceImpl implements UserService{
     public String updateUser(long id,User user){
         User user1 = userRepository.findUserById(id);
         if (user1==null){
-            return "{\"status\": \"fail\"";
+            return "{\"status\": \"fail\"}";
         }
 
         if(user.getName().trim()==null || user.getName()==""){
-            return "{\"status\": \"fail\"";
+            return "{\"status\": \"fail\"}";
         }else if (user.getEmail().trim()==null || user.getEmail()==""){
-            return "{\"status\": \"fail\"";
+            return "{\"status\": \"fail\"}";
         }else if (user.getPassword().trim()==null || user.getPassword()=="" ||user.getPassword().length()<10){
-            return "{\"status\": \"fail\"";
+            return "{\"status\": \"fail\"}";
         }else if (user.getGender()==null) {
-            return "{\"status\": \"fail\"";
+            return "{\"status\": \"fail\"}";
         }else {
             try {
                 user1.setName(user.getName());
@@ -113,9 +113,9 @@ public class UserServiceImpl implements UserService{
                 user1.setCity(user.getCity());
                 userRepository.save(user1);
             }catch (Exception e){
-                return "{\"status\": \"fail\"";
+                return "{\"status\": \"fail\"}";
             }
-            return "{\"status\": \"success\"";
+            return "{\"status\": \"success\"}";
         }
     }
 
@@ -133,7 +133,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User getUserByPhone(String phone) {
-        return null;
+        return userRepository.findUserByPhone(phone);
     }
 
 

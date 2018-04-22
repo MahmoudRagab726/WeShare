@@ -1,16 +1,12 @@
 package com.menainnovations.weshare.controller;
 
-import com.menainnovations.weshare.exception.LoginFailureException;
-import com.menainnovations.weshare.model.Post;
+import com.menainnovations.weshare.mobile.response.validator.UserValidator;
+import com.menainnovations.weshare.mobileReponse.UserResponse;
 import com.menainnovations.weshare.model.User;
 import com.menainnovations.weshare.services.PostServiceImpl;
-import com.menainnovations.weshare.services.UserService;
 import com.menainnovations.weshare.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -39,8 +35,10 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/login/phone" , method = RequestMethod.POST)
-    public User loginWithPhone(@RequestBody User user1){
-        User user =userService.getUserByPhone(user1.getPhone());
+    public UserResponse loginWithPhone(@RequestBody User user1){
+            User user =userService.getUserByPhone(user1.getPhone());
+            return UserValidator.validateUser(user);
+        /*
         try {
             String psw=user.getPassword();
             String password=user1.getPassword();
@@ -56,5 +54,7 @@ public class LoginController {
         }catch (Exception e){
             return null;
         }
+        */
+
     }
 }

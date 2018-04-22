@@ -16,7 +16,7 @@ public class User implements Serializable{
     private Long gender;
     private String bio;
     private String phone;
-    private City city;
+    private String city;
     private String photo;
     private int status;
     private List<Post> posts;
@@ -81,14 +81,12 @@ public class User implements Serializable{
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "User_City")
-    @JsonIgnore
-    public City getCity() {
+    @JoinColumn(name = "City")
+    public String getCity() {
         return city;
     }
 
-    public void setCity(City city) {
+    public void setCity(String city) {
         this.city = city;
     }
     @Column(name = "Photo")

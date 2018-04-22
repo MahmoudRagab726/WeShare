@@ -9,7 +9,7 @@ public class UserValidator {
        UserResponse response=new UserResponse();
        response.setId(user.getId());
        response.setBio(user.getBio());
-       response.setCity(user.getCity().getCityName());
+       response.setCity(user.getCity());
        response.setEmail(user.getEmail());
        response.setName(user.getName());
        response.setGender(user.getGender());

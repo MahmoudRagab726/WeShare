@@ -12,8 +12,8 @@ public class PostValidator {
     public static PostResponse validatePost(Post post){
         PostResponse response= new PostResponse();
         response.setCaseAddress(post.getCaseAddress());
-        response.setCaseArea(post.getCaseArea().getAreaName());
-        response.setCaseCity(post.getCaseCity().getCityName());
+        response.setCaseArea(post.getCaseArea());
+        response.setCaseCity(post.getCaseCity());
         response.setCaseContact(post.getCaseContact());
         List<CommentResponse> commentResponses=new ArrayList<CommentResponse>();
         for (int i=0;i<post.getComments().size();i++) {
@@ -25,6 +25,8 @@ public class PostValidator {
         response.setPostDate(post.getPostDate());
         response.setPhotos(post.getPhotos());
         response.setTitle(post.getTitle());
+        response.setPostContent(post.getPostContent());
+        response.setPostType(post.getPostType());
         /*
             remove unused data from response of post
          */

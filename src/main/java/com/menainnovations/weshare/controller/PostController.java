@@ -1,13 +1,14 @@
 package com.menainnovations.weshare.controller;
 
 import com.google.gson.Gson;
+import com.menainnovations.weshare.mobile.response.validator.PostValidator;
+import com.menainnovations.weshare.mobileReponse.ListPostsResponse;
+import com.menainnovations.weshare.mobileReponse.PostResponse;
 import com.menainnovations.weshare.model.Post;
 import com.menainnovations.weshare.model.User;
-import com.menainnovations.weshare.responses.PostResponse;
 import com.menainnovations.weshare.services.PhotoService;
 import com.menainnovations.weshare.services.PostService;
 import com.menainnovations.weshare.services.PostServiceImpl;
-import com.menainnovations.weshare.validator.PostValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,29 +25,29 @@ public class PostController {
         return PostValidator.validatePost(postService.getPostById(id));
     }
     @RequestMapping(value = "/search" , method = RequestMethod.GET)
-    public List<Post> getPostByAreaOrCityOrBoth(@RequestParam("area") String area , @RequestParam("city") String city){
+    public ListPostsResponse getPostByAreaOrCityOrBoth(@RequestParam("city") String city , @RequestParam("area") String area){
         if(area.trim()==""&&city.trim()==""){
-           return postService.getAllPosts();
+           return PostValidator.validateListOfPosts(postService.getAllPosts());
         }else if (area.trim()==""&&city.trim()!=""){
-            return postService.getPostByCity(city);
+            return PostValidator.validateListOfPosts(postService.getPostByCity(city));
         }else if (area.trim()!=""&&city.trim()==""){
-            return postService.getPostByArea(area);
+            return PostValidator.validateListOfPosts(postService.getPostByArea(area));
         }else {
-            return postService.getPostByAreaAndCity(area,city);
+            return PostValidator.validateListOfPosts(postService.getPostByAreaAndCity(area,city));
         }
     }
 
     @RequestMapping(value = "/user/{userId}/posts" , method = RequestMethod.GET)
-    public List<Post> getAllPosts(@PathVariable long userId){
-        return postService.getAllPostsByUserId(userId);
+    public ListPostsResponse getAllPosts(@PathVariable long userId){
+        return PostValidator.validateListOfPosts(postService.getAllPostsByUserId(userId));
     }
 
     /*
     this method for getting all posts for people that a user with User_Id follow them
      */
     @RequestMapping(value = "/user/{userId}/home" , method = RequestMethod.GET)
-    public List<Post> getPostFollowers(@PathVariable long userId){
-        return postService.getPostsByFollower(userId);
+    public ListPostsResponse getPostFollowers(@PathVariable long userId){
+        return PostValidator.validateListOfPosts(postService.getPostsByFollower(userId));
     }
 
     @RequestMapping(value = "/user/{userId}/post" , method = RequestMethod.POST)

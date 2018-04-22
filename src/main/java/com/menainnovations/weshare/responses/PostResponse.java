@@ -19,6 +19,7 @@ public class PostResponse {
     private User user;
     private List<Photo> photos;
     private List<CommentResponse> comments;
+    private String postType;
 
     public long getId() {
         return id;
@@ -114,5 +115,13 @@ public class PostResponse {
 
     public void setComments(List<CommentResponse> comments) {
         this.comments = comments;
+    }
+
+    public String getPostType() {
+        return postType;
+    }
+
+    public void setPostType(String postType) {
+        this.postType = postType;
     }
 }

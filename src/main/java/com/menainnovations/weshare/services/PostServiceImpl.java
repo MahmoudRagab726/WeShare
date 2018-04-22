@@ -84,7 +84,7 @@ public class PostServiceImpl implements PostService{
     @Override
     public String updatePost(long id , Post post) {
         try {
-            postRepository.updatePost(id, post.getTitle(), post.getPostContent(), post.getCaseName(), post.getCaseContact(), post.getCaseAddress(), post.getCaseCity().getId(), post.getCaseArea().getId());
+            postRepository.updatePost(id, post.getTitle(), post.getPostContent(), post.getCaseName(), post.getCaseContact(), post.getCaseAddress(), post.getCaseCity(), post.getCaseArea());
         }catch (Exception e){
             return "fail";
         }
