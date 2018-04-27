@@ -42,28 +42,25 @@ public class UserServiceImpl implements UserService{
     public String addUser(User user){
         long userId=0;
         if(user.getName().trim()==null || user.getName()==""){
-            return "{\"status\": \"fail\"" +
+            return "{\"status\": 0" +
                     ", \"userId\":}";
         }else if (user.getEmail().trim()==null || user.getEmail()==""){
-            return "{\"status\": \"fail\"" +
+            return "{\"status\": 0" +
                     ", \"userId\":}";
         }else if(!(getUserByEmail(user.getEmail())==null)){
-            return "{\"status\": \"fail\"" +
-                    ", \"userId\":}";
-        }else if (user.getPassword().trim()==null || user.getPassword()=="" ||user.getPassword().length()<10){
-            return "{\"status\": \"fail\"" +
+            return "{\"status\": 0" +
                     ", \"userId\":}";
         }else if (user.getGender()==null){
-            return "{\"status\": \"fail\"" +
+            return "{\"status\": 0" +
                     ", \"userId\":}";
         }else {
             try {
                 userId = userRepository.save(user).getId();
             }catch (Exception ex){
-                return "{\"status\": \"fail\"" +
+                return "{\"status\": 0" +
                         ", \"userId\":}";
             }
-            return "{\"status\": \"success\"" +
+            return "{\"status\": 1" +
                     ", \"userId\":"+userId+"}";
         }
     }
@@ -75,14 +72,14 @@ public class UserServiceImpl implements UserService{
     @Override
     public String deleteUserById(long id){
         if (getUserById(id)==null){
-            return "{\"status\": \"fail\"}";
+            return "{\"status\": 0}";
         }else {
             try {
                 userRepository.delete(id);
             }catch (Exception ex){
-                return "{\"status\": \"fail\"}";
+                return "{\"status\": 0}";
             }
-            return "{\"status\": \"success\"}";
+            return "{\"status\": 1}";
         }
     }
     /*
@@ -92,17 +89,15 @@ public class UserServiceImpl implements UserService{
     public String updateUser(long id,User user){
         User user1 = userRepository.findUserById(id);
         if (user1==null){
-            return "{\"status\": \"fail\"}";
+            return "{\"status\": 0}";
         }
 
         if(user.getName().trim()==null || user.getName()==""){
-            return "{\"status\": \"fail\"}";
+            return "{\"status\": 0}";
         }else if (user.getEmail().trim()==null || user.getEmail()==""){
-            return "{\"status\": \"fail\"}";
-        }else if (user.getPassword().trim()==null || user.getPassword()=="" ||user.getPassword().length()<10){
-            return "{\"status\": \"fail\"}";
+            return "{\"status\": 0}";
         }else if (user.getGender()==null) {
-            return "{\"status\": \"fail\"}";
+            return "{\"status\": 0}";
         }else {
             try {
                 user1.setName(user.getName());
@@ -113,9 +108,9 @@ public class UserServiceImpl implements UserService{
                 user1.setCity(user.getCity());
                 userRepository.save(user1);
             }catch (Exception e){
-                return "{\"status\": \"fail\"}";
+                return "{\"status\": 0}";
             }
-            return "{\"status\": \"success\"}";
+            return "{\"status\": 1}";
         }
     }
 

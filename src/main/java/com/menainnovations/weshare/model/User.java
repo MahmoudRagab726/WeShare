@@ -18,10 +18,9 @@ public class User implements Serializable{
     private String phone;
     private String city;
     private String photo;
+    private Date dob;
     private int status;
     private List<Post> posts;
-
-
 
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
@@ -114,5 +113,12 @@ public class User implements Serializable{
     public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
+    @Column(name = "dob")
+    public Date getDob() {
+        return dob;
+    }
 
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
 }

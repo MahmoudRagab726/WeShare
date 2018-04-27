@@ -14,4 +14,23 @@ public class CityServiceImpl implements CityService {
     public List<City> getAllCities() {
         return cityRepository.findAllByOrderByCityName();
     }
+
+    public String addCity(City city) {
+        try {
+             cityRepository.save(city);
+        }catch (Exception e){
+            return "{\"status\": 0}";
+        }
+        return "{\"status\": 1}";
+    }
+
+    public String deleteCity(long id) {
+        try {
+           cityRepository.delete(id);
+        }catch (Exception e){
+          return "{\"status\": 0}";
+        }
+
+        return "{\"status\": 1}";
+    }
 }

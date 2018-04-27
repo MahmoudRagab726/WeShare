@@ -59,10 +59,10 @@ public class PostController {
     public String deletePost(@PathVariable long id){
         Post post =postService.getPostById(id);
         if(post ==null){
-            return "fail";
+            return "{\"status\": 0}";
         }else {
             postService.deletePostById(id);
-            return "success";
+            return "{\"status\": 1}";
         }
     }
 

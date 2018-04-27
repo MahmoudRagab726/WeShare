@@ -1,6 +1,5 @@
 package com.menainnovations.weshare.controller;
 
-import com.google.gson.Gson;
 import com.menainnovations.weshare.mobile.response.validator.UserValidator;
 import com.menainnovations.weshare.mobileReponse.UserResponse;
 import com.menainnovations.weshare.model.User;

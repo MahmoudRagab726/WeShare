@@ -26,10 +26,10 @@ public class CommentServiceImpl implements CommentService {
         comment.setPost(post);
         comment.setCommentDate(new Date());
         if(comment.getCommentContent()==null||comment.getCommentContent()==""){
-            return "fail";
+            return "{\"status\": 0}";
         }else {
             commentRepository.save(comment);
-            return "success";
+            return "{\"status\": 1}";
         }
     }
 
@@ -39,10 +39,14 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void updateComment(long id, Comment comment) {
-
-        Comment comment1 = commentRepository.findOne(id);
-        comment1.setCommentContent(comment.getCommentContent());
-        commentRepository.save(comment1);
+    public String updateComment(long id, Comment comment) {
+        try {
+            Comment comment1 = commentRepository.findOne(id);
+            comment1.setCommentContent(comment.getCommentContent());
+            commentRepository.save(comment1);
+        }catch (Exception e){
+            return "{\"status\": 0}";
+        }
+        return "{\"status\": 1}";
     }
 }

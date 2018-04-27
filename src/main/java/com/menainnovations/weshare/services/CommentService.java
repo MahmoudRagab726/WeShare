@@ -10,6 +10,6 @@ public interface CommentService {
 
     public String addComment(long userId , long postId , Comment comment);
     public void deleteCommentById(long id);
-    public void updateComment(long id,Comment comment);
+    public String updateComment(long id,Comment comment);
 
 }

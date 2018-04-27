@@ -35,9 +35,9 @@ public class PhotoController {
     public String addPhotoToPost(@PathVariable long postId , MultipartFile[] photos){
         if(photos.length>=1) {
             photoService.addPhoto(postId, photos);
-            return "success";
+            return "{\"status\": 1}";
         }else
-            return "fail";
+            return "{\"status\": 0}";
     }
 
     @RequestMapping(value = "/user/{userId}/profilePhoto" , method = RequestMethod.POST)

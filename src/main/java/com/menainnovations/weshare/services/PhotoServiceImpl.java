@@ -91,10 +91,10 @@ public class PhotoServiceImpl implements PhotoService {
                     userService.updateUserProfilePhoto(userId,destination.toString().replace("\\","/"));
 
             } catch (IOException | RuntimeException e) {
-                return "fail";
+                return "{\"status\": 0}";
             }
         }
-        return "success";
+        return "{\"status\": 1}";
     }
 
 
@@ -107,9 +107,9 @@ public class PhotoServiceImpl implements PhotoService {
                 photoRepository.delete(id);
             }
         }catch (Exception e){
-            return "fail";
+            return "{\"status\": 0}";
         }
-        return "success";
+        return "{\"status\": 1}";
     }
 
     @Override
