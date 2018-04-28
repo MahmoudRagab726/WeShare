@@ -42,23 +42,14 @@ public class UserServiceImpl implements UserService{
     public String addUser(User user){
         long userId=0;
         if(user.getName().trim()==null || user.getName()==""){
-            return "{\"status\": 0" +
-                    ", \"userId\":}";
-        }else if (user.getEmail().trim()==null || user.getEmail()==""){
-            return "{\"status\": 0" +
-                    ", \"userId\":}";
-        }else if(!(getUserByEmail(user.getEmail())==null)){
-            return "{\"status\": 0" +
-                    ", \"userId\":}";
+            return "{\"status\": 0";
         }else if (user.getGender()==null){
-            return "{\"status\": 0" +
-                    ", \"userId\":}";
+            return "{\"status\": 0}";
         }else {
             try {
                 userId = userRepository.save(user).getId();
             }catch (Exception ex){
-                return "{\"status\": 0" +
-                        ", \"userId\":}";
+                return "{\"status\": 0}";
             }
             return "{\"status\": 1" +
                     ", \"userId\":"+userId+"}";
