@@ -3,10 +3,11 @@ package com.menainnovations.weshare.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class Area {
+public class Area implements Serializable{
     private long id;
     private String areaName;
     private City city;

@@ -53,14 +53,11 @@ public class PostServiceImpl implements PostService{
         long postId=0;
         User user = userRepository.findUserById(userId);
         if (user==null){
-            return "{\"status\": \"fail\"" +
-                    ", \"postId\":}";
+            return "{\"status\": 0 }";
         }else if (post.getTitle()==null || post.getTitle().trim()==""){
-            return "{\"status\": \"fail\"" +
-                    ", \"postId\":}";
+            return "{\"status\": 0 }";
         }else  if (post.getPostContent()==null||post.getPostContent().trim()==""){
-            return "{\"status\": \"fail\"" +
-                    ", \"postId\":}";
+            return "{\"status\": 0 }";
         }else {
             try {
                 post.setUser(user);
@@ -68,10 +65,9 @@ public class PostServiceImpl implements PostService{
                 postId= postRepository.save(post).getId();
                 System.out.println(postId);
             }catch (Exception e){
-                return "{\"status\": \"fail\"" +
-                        ", \"postId\":}";
+                return "{\"status\": 0}";
             }
-            return "{\"status\": \"success\"" +
+            return "{\"status\": 1" +
                     ", \"postId\": "+postId+"}";
         }
 

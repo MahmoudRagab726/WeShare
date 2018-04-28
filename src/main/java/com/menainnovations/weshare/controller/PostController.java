@@ -9,6 +9,7 @@ import com.menainnovations.weshare.model.User;
 import com.menainnovations.weshare.services.PhotoService;
 import com.menainnovations.weshare.services.PostService;
 import com.menainnovations.weshare.services.PostServiceImpl;
+import com.menainnovations.weshare.validator.UserTokenValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,55 +21,122 @@ import java.util.List;
 public class PostController {
     @Autowired
     PostServiceImpl postService;
+    @Autowired
+    UserTokenValidator userTokenValidator;
+
     @RequestMapping(value = "/post/{id}" , method = RequestMethod.GET)
-    public PostResponse getPostById(@PathVariable long id){
-        return PostValidator.validatePost(postService.getPostById(id));
+    public PostResponse getPostById(@RequestHeader("Access-Token") String token ,@PathVariable long id){
+        PostResponse response=new PostResponse();
+        if(token.trim()==""){
+            response.setStatus(400);
+            return response;
+        }else if (userTokenValidator.validateToken(null,token)){
+            return PostValidator.validatePost(postService.getPostById(id));
+        }else {
+            response.setStatus(400);
+            return response;
+        }
+
     }
     @RequestMapping(value = "/search" , method = RequestMethod.GET)
-    public ListPostsResponse getPostByAreaOrCityOrBoth(@RequestParam("city") String city , @RequestParam("area") String area){
-        if(area.trim()==""&&city.trim()==""){
-           return PostValidator.validateListOfPosts(postService.getAllPosts());
-        }else if (area.trim()==""&&city.trim()!=""){
-            return PostValidator.validateListOfPosts(postService.getPostByCity(city));
-        }else if (area.trim()!=""&&city.trim()==""){
-            return PostValidator.validateListOfPosts(postService.getPostByArea(area));
-        }else {
-            return PostValidator.validateListOfPosts(postService.getPostByAreaAndCity(area,city));
+    public ListPostsResponse getPostByAreaOrCityOrBoth(@RequestHeader("Access-Token") String token ,@RequestParam("city") String city , @RequestParam("area") String area){
+       ListPostsResponse response=new ListPostsResponse();
+        if(token.trim()==""){
+            response.setStatus(400);
+            return response;
+        }else if (userTokenValidator.validateToken(null,token)){
+            if(area.trim()==""&&city.trim()==""){
+                return PostValidator.validateListOfPosts(postService.getAllPosts());
+            }else if (area.trim()==""&&city.trim()!=""){
+                return PostValidator.validateListOfPosts(postService.getPostByCity(city));
+            }else if (area.trim()!=""&&city.trim()==""){
+                return PostValidator.validateListOfPosts(postService.getPostByArea(area));
+            }else {
+                return PostValidator.validateListOfPosts(postService.getPostByAreaAndCity(area,city));
+            }
+            }else {
+            response.setStatus(400);
+            return response;
         }
+
+
+
     }
 
     @RequestMapping(value = "/user/{userId}/posts" , method = RequestMethod.GET)
-    public ListPostsResponse getAllPosts(@PathVariable long userId){
-        return PostValidator.validateListOfPosts(postService.getAllPostsByUserId(userId));
+    public ListPostsResponse getAllPosts(@RequestHeader("Access-Token") String token ,@PathVariable long userId){
+        ListPostsResponse response=new ListPostsResponse();
+        if(token.trim()==""){
+            response.setStatus(400);
+            return response;
+        }else if (userTokenValidator.validateToken(userId,token)){
+            return PostValidator.validateListOfPosts(postService.getAllPostsByUserId(userId));
+        }else {
+            response.setStatus(400);
+            return response;
+        }
+
     }
 
     /*
     this method for getting all posts for people that a user with User_Id follow them
      */
     @RequestMapping(value = "/user/{userId}/home" , method = RequestMethod.GET)
-    public ListPostsResponse getPostFollowers(@PathVariable long userId){
-        return PostValidator.validateListOfPosts(postService.getPostsByFollower(userId));
+    public ListPostsResponse getPostFollowers(@RequestHeader("Access-Token") String token ,@PathVariable long userId){
+       ListPostsResponse response=new ListPostsResponse();
+        if(token.trim()==""){
+            response.setStatus(400);
+            return response;
+        }else if (userTokenValidator.validateToken(userId,token)){
+            return PostValidator.validateListOfPosts(postService.getPostsByFollower(userId));
+        }else {
+            response.setStatus(400);
+            return response;
+        }
+
     }
 
     @RequestMapping(value = "/user/{userId}/post" , method = RequestMethod.POST)
-    public String addPost(@PathVariable long userId , @RequestBody Post post){
+    public String addPost(@RequestHeader("Access-Token") String token ,@PathVariable long userId , @RequestBody Post post){
+        if(token.trim()==""){
+            return "{\"status\": 400}";
+        }else if (userTokenValidator.validateToken(userId,token)){
             return postService.addPost(userId, post);
+        }else {
+            return "{\"status\": 400}";
+        }
+
+
     }
 
     @RequestMapping(value = "/post/{id}"  , method = RequestMethod.DELETE)
-    public String deletePost(@PathVariable long id){
-        Post post =postService.getPostById(id);
-        if(post ==null){
-            return "{\"status\": 0}";
+    public String deletePost(@RequestHeader("Access-Token") String token ,@PathVariable long id){
+        if(token.trim()==""){
+            return "{\"status\": 400}";
+        }else if (userTokenValidator.validateToken(null,token)){
+            Post post =postService.getPostById(id);
+            if(post ==null){
+                return "{\"status\": 0}";
+            }else {
+                postService.deletePostById(id);
+                return "{\"status\": 1}";
+            }
         }else {
-            postService.deletePostById(id);
-            return "{\"status\": 1}";
+            return "{\"status\": 400}";
         }
+
     }
 
     @RequestMapping(value = "/post/{id}"  , method = RequestMethod.PUT)
-    public String updatePost(@PathVariable long id , @RequestBody Post post){
-                return postService.updatePost(id,post);
+    public String updatePost(@RequestHeader("Access-Token") String token ,@PathVariable long id , @RequestBody Post post){
+        if(token.trim()==""){
+            return "{\"status\": 400}";
+        }else if (userTokenValidator.validateToken(null,token)){
+            return postService.updatePost(id,post);
+        }else {
+            return "{\"status\": 400}";
+        }
+
     }
 
 

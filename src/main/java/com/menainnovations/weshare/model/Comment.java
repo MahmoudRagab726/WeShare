@@ -3,10 +3,11 @@ package com.menainnovations.weshare.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class Comment {
+public class Comment implements Serializable{
     private long id;
     private String commentContent;
     private Date  commentDate;

@@ -1,9 +1,10 @@
 package com.menainnovations.weshare.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Follower {
+public class Follower implements Serializable{
     private long id;
     private long userId;
     private long followerId;
