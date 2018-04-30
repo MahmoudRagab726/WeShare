@@ -17,6 +17,7 @@ public class User implements Serializable{
     private String bio;
     private String phone;
     private String city;
+    private String area;
     private String photo;
     private String dob;
     private int status;
@@ -83,6 +84,15 @@ public class User implements Serializable{
     @JoinColumn(name = "City")
     public String getCity() {
         return city;
+    }
+
+    @Column(name = "Area")
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 
     public void setCity(String city) {
