@@ -18,7 +18,7 @@ public class User implements Serializable{
     private String phone;
     private String city;
     private String photo;
-    private Date dob;
+    private String dob;
     private int status;
     private List<Post> posts;
 
@@ -114,11 +114,11 @@ public class User implements Serializable{
         this.posts = posts;
     }
     @Column(name = "dob")
-    public Date getDob() {
+    public String getDob() {
         return dob;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
 }
