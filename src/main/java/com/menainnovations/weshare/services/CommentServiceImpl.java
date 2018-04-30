@@ -17,12 +17,15 @@ public class CommentServiceImpl implements CommentService {
     private CommentRepository commentRepository;
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private UserServiceImpl userService;
 
 
     @Override
     public String addComment(long userId , long postId , Comment comment) {
         Post post =postRepository.findPostById(postId);
         comment.setUserId(userId);
+        comment.setUserName(userService.getUserById(userId).getName());
         comment.setPost(post);
         comment.setCommentDate(new Date());
         if(comment.getCommentContent()==null||comment.getCommentContent()==""){

@@ -41,7 +41,12 @@ public class UserController {
 */
     @RequestMapping(value = "/api/user" , method = RequestMethod.POST)
     public String addUser(@RequestBody User user){
-       return userService.addUser(user);
+        User user1=userService.getUserByPhone(user.getPhone());
+        if(user1==null) {
+            return userService.addUser(user);
+        }else {
+            return "{\"status\": 0}";
+        }
     }
     @RequestMapping(value = "/api/user/{id}"  , method = RequestMethod.DELETE)
     public String deleteUser(@RequestHeader("Access-Token") String token ,@PathVariable long id){

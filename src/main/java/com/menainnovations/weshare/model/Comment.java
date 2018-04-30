@@ -12,6 +12,7 @@ public class Comment implements Serializable{
     private String commentContent;
     private Date  commentDate;
     private long userId;
+    private String userName;
     private Post post;
 
     @Id
@@ -43,6 +44,15 @@ public class Comment implements Serializable{
     @Column(name = "User_Id")
     public long getUserId() {
         return userId;
+    }
+
+    @Column(name = "User_Name")
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public void setUserId(long userId) {
